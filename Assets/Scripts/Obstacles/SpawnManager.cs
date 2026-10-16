@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
 
     {
 
-        // Testing only 
+        // Testing only, replace with call from game manager later
 
         if (Keyboard.current.pKey.wasPressedThisFrame)
 
@@ -82,9 +82,7 @@ public class SpawnManager : MonoBehaviour
 
         );
 
-
-
-        Debug.Log("Object Spawned!");
+        //Debug.Log("Object Spawned!");
 
     }
 
