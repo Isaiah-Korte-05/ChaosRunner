@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public int playerScore = 0;
     public int remainingLives = 0;
 
-    public float minSpawnInterval = 2f;
-    public float maxSpawnInterval = 2.125f;
+    public float minSpawnInterval = 1.5f;
+    public float maxSpawnInterval = 2f;
     private float spawnTimer;
     private float nextSpawnTime;
 
