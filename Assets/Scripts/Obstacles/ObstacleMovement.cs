@@ -9,7 +9,7 @@ public class ObstacleMovement : MonoBehaviour
 
     void Start()
     {
-        speed = Random.Range(minSpeed, maxSpeed);        
+        //speed = Random.Range(minSpeed, maxSpeed);        
     }
 
     // Update is called once per frame
