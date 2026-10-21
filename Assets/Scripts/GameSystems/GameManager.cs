@@ -15,12 +15,18 @@ public class GameManager : MonoBehaviour
     public int playerScore = 0;
     public int remainingLives = 0;
 
+    public float minSpawnInterval = 2f;
+    public float maxSpawnInterval = 5f;
+    private float spawnTimer;
+    private float nextSpawnTime;
+
     public bool isPlaying = true;
 
     void Start()
     {
         remainingLives = playerLives;
         UpdateUI();
+        nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
         if (StatusText != null) { 
             StatusText.gameObject.SetActive(false);
         }
@@ -29,8 +35,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (isPlaying)
+        if (!isPlaying) return;
+
+        spawnTimer += Time.deltaTime;
+
+        if(spawnTimer >= nextSpawnTime)
         {
+            spawnTimer = 0f;
+            nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
             spawnManager.SpawnObject();
         }
     }
