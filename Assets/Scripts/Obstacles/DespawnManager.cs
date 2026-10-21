@@ -1,15 +1,31 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class DespawnManager : MonoBehaviour
 {
-    public SpawnManager spawnManager;
+    public GameManager GameManager;
+    void Start()
+    {
+        // Automatically find the GameManager in the scene at runtime
+        GameManager = FindAnyObjectByType<GameManager>();
+    }
     void OnTriggerEnter(Collider other)
     {
-            if (other.CompareTag("Obstacle"))
+        if (other.CompareTag("Despawn"))
         {
-            Destroy(other.gameObject);
-            Debug.Log("Obstacle Cleared");
+            Destroy(gameObject);
+            //Debug.Log("Obstacle Cleared");
+
+            // GAME MANAGER INCREASE SCORE HERE
+            GameManager.AddScore();
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+            //Debug.Log("Player hit!");
+
+            // GAME MANAGER DECREASE LIFE HERE
+            GameManager.LoseAttempt();
         }
     }
 }

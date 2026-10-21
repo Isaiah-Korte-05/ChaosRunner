@@ -4,16 +4,61 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public SpawnManager spawnManager;
+
+    public TextMeshProUGUI ScoreText;
+    public TextMeshProUGUI LivesText;
+    public TextMeshProUGUI StatusText;
+
     public int targetScore = 15;
-    public int targetLives = 1;
+    public int playerLives = 1;
     public int playerScore = 0;
-    public int playerLives = 0;
+    public int remainingLives = 0;
+
+    public float minSpawnInterval = 1.5f;
+    public float maxSpawnInterval = 2f;
+    private float spawnTimer;
+    private float nextSpawnTime;
 
     public bool isPlaying = true;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        playerLives = targetLives;
+        remainingLives = playerLives;
+        UpdateUI();
+        nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
+        if (StatusText != null) { 
+            StatusText.gameObject.SetActive(false);
+        }
+    }
+
+
+    void Update()
+    {
+        if (!isPlaying) return;
+
+        spawnTimer += Time.deltaTime;
+
+        if (spawnTimer >= nextSpawnTime)
+        {
+            spawnTimer = 0f;
+            nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
+
+            int spawnCount = Random.Range(1, 3);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                spawnManager.SpawnObject();
+            }
+        }
+    }
+
+    void UpdateUI()
+    {
+        if (ScoreText != null)
+            ScoreText.text = "Obstacles Avoided: " + playerScore + " / " + targetScore;
+
+        if (LivesText != null)
+            LivesText.text = "Lives Left: " + remainingLives + " / " + playerLives;
     }
 
     //called when triggered to add point to score
@@ -23,8 +68,9 @@ public class GameManager : MonoBehaviour
             return;
 
         playerScore++;
+        UpdateUI();
 
-        Debug.Log("Score: " +  playerScore);
+        Debug.Log("Obstacles avoided: " +  playerScore);
 
         if(playerScore >= targetScore)
         {
@@ -39,11 +85,12 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        playerLives--;
+        remainingLives--;
+        UpdateUI();
 
-        Debug.Log("Lives: " + playerLives);
+        Debug.Log("Remaining lives: " + remainingLives);
 
-        if(playerLives <= 0)
+        if(remainingLives <= 0)
         {
             LoseGame();
         }
@@ -52,20 +99,29 @@ public class GameManager : MonoBehaviour
     void WinGame()
     {
         isPlaying = false;
+        Time.timeScale = 0f;
+
+        if (StatusText != null)
+        {
+            StatusText.gameObject.SetActive(true);
+            StatusText.text = "YOU WIN!";
+        }
 
         Debug.Log("VICTORY ACHIEVED");
     }
 
     void LoseGame()
     {
-        isPlaying = true;
+        isPlaying = false;
+        Time.timeScale = 0f;
+
+        if (StatusText != null)
+        {
+            StatusText.gameObject.SetActive(true);
+            StatusText.text = "GAME OVER!";
+        }
 
         Debug.Log("YOU DIED");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
