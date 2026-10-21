@@ -18,16 +18,6 @@ public class SpawnManager : MonoBehaviour
 
     {
 
-        // Testing only, replace with call from game manager later
-
-        if (Keyboard.current.pKey.wasPressedThisFrame)
-
-        {
-
-            SpawnObject();
-
-        }
-
     }
 
 
