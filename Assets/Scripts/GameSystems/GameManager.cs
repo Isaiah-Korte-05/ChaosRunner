@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public int playerScore = 0;
     public int remainingLives = 0;
 
-    public float minSpawnInterval = 2f;
-    public float maxSpawnInterval = 5f;
+    public float minSpawnInterval = 1.5f;
+    public float maxSpawnInterval = 2f;
     private float spawnTimer;
     private float nextSpawnTime;
 
@@ -39,11 +39,16 @@ public class GameManager : MonoBehaviour
 
         spawnTimer += Time.deltaTime;
 
-        if(spawnTimer >= nextSpawnTime)
+        if (spawnTimer >= nextSpawnTime)
         {
             spawnTimer = 0f;
             nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
-            spawnManager.SpawnObject();
+
+            int spawnCount = Random.Range(1, 3);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                spawnManager.SpawnObject();
+            }
         }
     }
 

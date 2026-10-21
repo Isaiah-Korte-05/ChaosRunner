@@ -12,16 +12,6 @@ public class SpawnManager : MonoBehaviour
 
     public Transform[] spawnPoints;
 
-
-
-    void Update()
-
-    {
-
-    }
-
-
-
     public void SpawnObject()
 
     {
@@ -71,8 +61,6 @@ public class SpawnManager : MonoBehaviour
             selectedSpawnPoint.rotation * Quaternion.Euler(0, 180, 0)
 
         );
-
-        //Debug.Log("Object Spawned!");
 
     }
 
