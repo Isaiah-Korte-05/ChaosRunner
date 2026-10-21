@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 152741143}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 0.5, z: 12}
+  m_LocalPosition: {x: -3, y: 1, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -275,7 +275,6 @@ GameObject:
   - component: {fileID: 165492704}
   - component: {fileID: 165492703}
   - component: {fileID: 165492702}
-  - component: {fileID: 165492701}
   - component: {fileID: 165492700}
   m_Layer: 0
   m_Name: Despawn Point
@@ -311,19 +310,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &165492701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165492699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 904640a2337677f40a210992a1cf15a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DespawnManager
-  GameManager: {fileID: 0}
 --- !u!65 &165492702
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1142,7 +1128,7 @@ Transform:
   m_GameObject: {fileID: 634163471}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 12}
+  m_LocalPosition: {x: 0, y: 1, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1173,7 +1159,7 @@ Transform:
   m_GameObject: {fileID: 638498415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 0.5, z: 12}
+  m_LocalPosition: {x: 3, y: 1, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1491,6 +1477,8 @@ MonoBehaviour:
   playerLives: 1
   playerScore: 0
   remainingLives: 0
+  minSpawnInterval: 1.5
+  maxSpawnInterval: 2
   isPlaying: 1
 --- !u!4 &1098953636
 Transform:
