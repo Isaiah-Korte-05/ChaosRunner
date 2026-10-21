@@ -1652,8 +1652,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
-  jumpForce: 100
-  fallMultiplier: 10
+  jumpForce: 125
+  fallMultiplier: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
