@@ -12,6 +12,9 @@ public class SpawnManager : MonoBehaviour
 
     public Transform[] spawnPoints;
 
+    public float currentSpeed = 5f;
+    public float maxSpeed = 100f;
+
     public void SpawnObject()
 
     {
@@ -52,7 +55,7 @@ public class SpawnManager : MonoBehaviour
 
 
 
-        Instantiate(
+        GameObject obj = Instantiate(
 
             objectPrefab,
 
@@ -62,6 +65,21 @@ public class SpawnManager : MonoBehaviour
 
         );
 
+       
+        ObstacleMovement movement = obj.GetComponent<ObstacleMovement>();
+        if (movement != null)
+        {
+            if (currentSpeed < maxSpeed)
+            {
+                movement.speed = currentSpeed;
+                currentSpeed += 0.25f; 
+            }
+            else
+            {
+                movement.speed = maxSpeed;
+            }
+           
+        }
     }
 
 }
