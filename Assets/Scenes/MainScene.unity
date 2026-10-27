@@ -1475,7 +1475,7 @@ MonoBehaviour:
   ScoreText: {fileID: 604264464}
   LivesText: {fileID: 1688609014}
   StatusText: {fileID: 261356192}
-  targetScore: 50
+  targetScore: 15
   playerLives: 1
   playerScore: 0
   remainingLives: 0
@@ -1554,7 +1554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' Controls
+  m_text: '-Controls-
 
     A - left
 
@@ -1593,7 +1593,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
