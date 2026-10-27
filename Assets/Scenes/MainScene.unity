@@ -951,6 +951,8 @@ MonoBehaviour:
   - {fileID: 634163472}
   - {fileID: 638498416}
   - {fileID: 152741144}
+  currentSpeed: 5
+  maxSpeed: 100
 --- !u!4 &476789549
 Transform:
   m_ObjectHideFlags: 0
@@ -1473,7 +1475,7 @@ MonoBehaviour:
   ScoreText: {fileID: 604264464}
   LivesText: {fileID: 1688609014}
   StatusText: {fileID: 261356192}
-  targetScore: 15
+  targetScore: 50
   playerLives: 1
   playerScore: 0
   remainingLives: 0
