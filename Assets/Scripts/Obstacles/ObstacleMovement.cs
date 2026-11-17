@@ -2,15 +2,8 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    public float minSpeed = 3f;
-    public float maxSpeed = 8f;
-
+    // fixed speed, but Time.deltaTime is slowly increased during the game
     public float speed = 5f;
-
-    void Start()
-    {
-        //speed = Random.Range(minSpeed, maxSpeed);        
-    }
 
     // Update is called once per frame
     void Update()
