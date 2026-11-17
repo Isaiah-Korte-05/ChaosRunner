@@ -92,20 +92,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void WinGame()
-    {
-        isPlaying = false;
-        Time.timeScale = 0f;
-
-        if (StatusText != null)
-        {
-            StatusText.gameObject.SetActive(true);
-            StatusText.text = "YOU WIN!";
-        }
-
-        Debug.Log("VICTORY ACHIEVED");
-    }
-
     void LoseGame()
     {
         isPlaying = false;
