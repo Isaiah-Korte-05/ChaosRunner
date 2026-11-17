@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI LivesText;
     public TextMeshProUGUI StatusText;
 
-    public int targetScore = 15;
     public int playerLives = 1;
     public int playerScore = 0;
     public int remainingLives = 0;
@@ -55,7 +54,7 @@ public class GameManager : MonoBehaviour
     void UpdateUI()
     {
         if (ScoreText != null)
-            ScoreText.text = "Obstacles Avoided: " + playerScore + " / " + targetScore;
+            ScoreText.text = "Obstacles Avoided: " + playerScore;
 
         if (LivesText != null)
             LivesText.text = "Lives Left: " + remainingLives + " / " + playerLives;
@@ -71,11 +70,8 @@ public class GameManager : MonoBehaviour
         UpdateUI();
 
         Debug.Log("Obstacles avoided: " +  playerScore);
+        minSpawnInterval = Mathf.Max(0.25f, minSpawnInterval - 0.05f);
 
-        if(playerScore >= targetScore)
-        {
-            WinGame();
-        }
     }
 
     public void LoseAttempt()
