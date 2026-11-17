@@ -1,35 +1,58 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float jumpForce = 7f;
-    public float fallMultiplier = 2.5f;
+
+    public float[] lanes = { -3f, 0f, 3f };
+    private int currentLaneIndex = 1;
+    public float laneChangeSpeed = 15f;
+
+    public float targetJumpHeight = 3f;
+    public float timeToApex = 0.35f;
+    public float fallMultiplier = 2.2f;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
 
     private Rigidbody rb;
-    private Vector2 moveInput;
     private bool isGrounded;
+
+    private float gravity;
+    private float initialJumpVelocity;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        rb.useGravity = false;
+
+        Vector3 pos = transform.position;
+        pos.x = lanes[currentLaneIndex];
+        transform.position = pos;
+
+        CalculateJumpPhysics();
+    }
+
+    private void OnValidate()
+    {
+        CalculateJumpPhysics();
+    }
+
+    void CalculateJumpPhysics()
+    {
+        if (timeToApex > 0f)
+        {
+            gravity = (-2f * targetJumpHeight) / (timeToApex * timeToApex);
+            initialJumpVelocity = (2f * targetJumpHeight) / timeToApex;
+        }
     }
 
     void Update()
     {
-        float horizontal = 0f;
-        float vertical = 0f;
-
-        if (Keyboard.current.aKey.isPressed)
-            horizontal = -1f;
-        if (Keyboard.current.dKey.isPressed)
-            horizontal = 1f;
-
-        moveInput = new Vector2(horizontal, vertical);
+        if (Keyboard.current.aKey.wasPressedThisFrame || Keyboard.current.leftArrowKey.wasPressedThisFrame) { ChangeLane(-1); }
+        if (Keyboard.current.dKey.wasPressedThisFrame || Keyboard.current.rightArrowKey.wasPressedThisFrame) { ChangeLane(1); }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
@@ -38,22 +61,27 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 movement = new Vector3(moveInput.x, 0f, moveInput.y);
+        float targetX = lanes[currentLaneIndex];
+        float xDifference = targetX - transform.position.x;
+        float targetXVelocity = xDifference * laneChangeSpeed;
 
-        movement = movement.normalized;
+        float currentGravity = gravity;
 
-        Vector3 targetVelocity = new Vector3(movement.x * moveSpeed, rb.linearVelocity.y, movement.z * moveSpeed);
-        rb.linearVelocity = targetVelocity;
+        if (rb.linearVelocity.y < 0f) { currentGravity *= fallMultiplier; }
 
-        if (rb.linearVelocity.y > 0f) {
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1f) * Time.fixedDeltaTime;
-        }
+        float newVelocityY = rb.linearVelocity.y + (currentGravity * Time.fixedDeltaTime);
+
+        rb.linearVelocity = new Vector3(targetXVelocity, newVelocityY, 0f);
+    }
+
+    void ChangeLane(int direction)
+    {
+        currentLaneIndex += direction;
+        currentLaneIndex = Mathf.Clamp(currentLaneIndex, 0, lanes.Length - 1);
     }
 
     void Jump()
     {
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, initialJumpVelocity, rb.linearVelocity.z);
     }
 }
