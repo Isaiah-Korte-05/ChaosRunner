@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 public class ProjectileImpact : MonoBehaviour
 {
 
@@ -23,4 +23,4 @@ public class ProjectileImpact : MonoBehaviour
         reported = true;
         if (GameManager.Instance != null) GameManager.Instance.ProjectileFinished();
     }
-}
+}*/
