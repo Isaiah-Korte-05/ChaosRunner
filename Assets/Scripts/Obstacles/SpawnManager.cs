@@ -42,15 +42,6 @@ public class SpawnManager : MonoBehaviour
             selectedSpawnPoint.position,
             selectedSpawnPoint.rotation * Quaternion.Euler(0, 180, 0)
         );
-
-        ObstacleMovement movement = obj.GetComponent<ObstacleMovement>();
-        if (movement != null)
-        {
-            if (Time.timeScale < maxTimeScale)
-            {
-                Time.timeScale += accelerationRate * Time.deltaTime;
-            }
-        }
     }
 
 }
