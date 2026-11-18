@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
         playerScore++;
         UpdateUI();
 
-        Debug.Log("Obstacles avoided: " +  playerScore);
         minSpawnInterval = Mathf.Max(0.25f, minSpawnInterval - 0.05f);
 
     }
@@ -101,14 +100,13 @@ public class GameManager : MonoBehaviour
         remainingLives--;
         UpdateUI();
 
-        Debug.Log("Remaining lives: " + remainingLives);
-
         if(remainingLives <= 0) { LoseGame(); }
     }
 
     void LoseGame()
     {
         isPlaying = false;
+        state = GameState.Lost;
         Time.timeScale = 0f;
 
         if (StatusText != null)
@@ -117,7 +115,6 @@ public class GameManager : MonoBehaviour
             StatusText.text = "GAME OVER!";
         }
 
-        Debug.Log("YOU DIED");
     }
 
     public bool CanShoot()
@@ -129,17 +126,6 @@ public class GameManager : MonoBehaviour
     {
         if (!CanShoot()) return;
         ammo--;
-        projectilesInFlight++;
         UpdateUI();
-    }
-
-    public void ProjectileFinished()
-    {
-        projectilesInFlight = Mathf.Max(projectilesInFlight - 1, 0);
-        if (state == GameState.Playing && ammo == 0 && projectilesInFlight == 0)
-        {
-            state = GameState.Lost;
-            UpdateUI();
-        }
     }
 }
