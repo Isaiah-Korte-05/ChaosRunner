@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI LivesText;
     public TextMeshProUGUI StatusText;
+    public TextMeshProUGUI AmmoText;
 
     public int playerLives = 1;
     public int playerScore = 0;
@@ -21,8 +22,21 @@ public class GameManager : MonoBehaviour
 
     public bool isPlaying = true;
 
+    public int startingAmmo = 10;
+    private int ammo, projectilesInFlight;
+
+    public enum GameState
+    {
+        Playing,
+        Won,
+        Lost
+    }
+    public GameState state = GameState.Playing;
+    public static GameManager Instance { get; private set; }
+
     void Start()
     {
+        ammo = startingAmmo;
         remainingLives = playerLives;
         UpdateUI();
         nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
@@ -58,6 +72,9 @@ public class GameManager : MonoBehaviour
 
         if (LivesText != null)
             LivesText.text = "Lives Left: " + remainingLives + " / " + playerLives;
+
+        if (AmmoText != null)
+            AmmoText.text = "Ammo: " + ammo;
     }
 
     //called when triggered to add point to score
@@ -86,24 +103,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Remaining lives: " + remainingLives);
 
-        if(remainingLives <= 0)
-        {
-            LoseGame();
-        }
-    }
-
-    void WinGame()
-    {
-        isPlaying = false;
-        Time.timeScale = 0f;
-
-        if (StatusText != null)
-        {
-            StatusText.gameObject.SetActive(true);
-            StatusText.text = "YOU WIN!";
-        }
-
-        Debug.Log("VICTORY ACHIEVED");
+        if(remainingLives <= 0) { LoseGame(); }
     }
 
     void LoseGame()
@@ -120,4 +120,26 @@ public class GameManager : MonoBehaviour
         Debug.Log("YOU DIED");
     }
 
+    public bool CanShoot()
+    {
+        return state == GameState.Playing && ammo > 0;
+    }
+
+    public void shotFired()
+    {
+        if (!CanShoot()) return;
+        ammo--;
+        projectilesInFlight++;
+        UpdateUI();
+    }
+
+    public void ProjectileFinished()
+    {
+        projectilesInFlight = Mathf.Max(projectilesInFlight - 1, 0);
+        if (state == GameState.Playing && ammo == 0 && projectilesInFlight == 0)
+        {
+            state = GameState.Lost;
+            UpdateUI();
+        }
+    }
 }

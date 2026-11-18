@@ -12,73 +12,44 @@ public class SpawnManager : MonoBehaviour
 
     public Transform[] spawnPoints;
 
-    public float currentSpeed = 5f;
-    public float maxSpeed = 100f;
+    public float accelerationRate = 0.05f;
+    public float maxTimeScale = 3.0f;
 
     public void SpawnObject()
 
     {
 
         if (objectPrefab == null)
-
         {
-
             Debug.Log("No prefab assigned.");
-
             return;
-
         }
 
 
 
         if (spawnPoints.Length == 0)
-
         {
-
             Debug.Log("No spawn points assigned.");
-
             return;
-
         }
 
+        int randomIndex = Random.Range(0, spawnPoints.Length);
 
-
-        int randomIndex =
-
-            Random.Range(0, spawnPoints.Length);
-
-
-
-        Transform selectedSpawnPoint =
-
-            spawnPoints[randomIndex];
-
-
+        Transform selectedSpawnPoint = spawnPoints[randomIndex];
 
         GameObject obj = Instantiate(
-
             objectPrefab,
-
             selectedSpawnPoint.position,
-
             selectedSpawnPoint.rotation * Quaternion.Euler(0, 180, 0)
-
         );
 
-       
         ObstacleMovement movement = obj.GetComponent<ObstacleMovement>();
         if (movement != null)
         {
-            if (currentSpeed < maxSpeed)
+            if (Time.timeScale < maxTimeScale)
             {
-                movement.speed = currentSpeed;
-                currentSpeed += 0.25f; 
+                Time.timeScale += accelerationRate * Time.deltaTime;
             }
-            else
-            {
-                movement.speed = maxSpeed;
-            }
-           
         }
     }
 
