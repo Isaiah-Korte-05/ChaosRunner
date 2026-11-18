@@ -94,12 +94,12 @@ public class GameManager : MonoBehaviour
         UpdateUI();
 
         Debug.Log("Obstacles avoided: " +  playerScore);
-        minSpawnInterval = Mathf.Max(0.25f, minSpawnInterval - 0.05f);
+        Time.timeScale *= 1.01f;
 
         if(playerScore >= checkpoint)
         {
-            checkpointPassed++; 
-            checkpoint *= (int)Mathf.Pow(1.25f, checkpointPassed);
+            checkpointPassed++;
+            checkpoint += (int) ((float)checkpoint * (float)checkpointPassed * Mathf.Pow(0.8f, checkpointPassed));
             UpdateUI();
         }
 
