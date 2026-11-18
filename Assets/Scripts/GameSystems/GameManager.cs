@@ -23,7 +23,10 @@ public class GameManager : MonoBehaviour
     public bool isPlaying = true;
 
     public int startingAmmo = 10;
-    private int ammo, projectilesInFlight;
+    private int ammo;
+
+    public bool shieldIsActive = false;
+    public float shieldTime = 5f;
 
     public enum GameState
     {

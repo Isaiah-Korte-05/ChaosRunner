@@ -24,8 +24,16 @@ public class DespawnManager : MonoBehaviour
             Destroy(gameObject);
             //Debug.Log("Player hit!");
 
-            // GAME MANAGER DECREASE LIFE HERE
-            GameManager.LoseAttempt();
+            // ONLY DECREASE LIFE IF SHIELD INACTIVE
+            if (!GameManager.shieldIsActive)
+            {
+                // GAME MANAGER DECREASE LIFE HERE
+                GameManager.LoseAttempt();
+            }
+            else
+            {
+                GameManager.shieldIsActive = false;
+            }
         }
     }
 }
