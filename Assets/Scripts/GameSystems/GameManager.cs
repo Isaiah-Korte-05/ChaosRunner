@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -10,10 +11,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI LivesText;
     public TextMeshProUGUI StatusText;
     public TextMeshProUGUI AmmoText;
+    public TextMeshProUGUI CheckpointText;
 
     public int playerLives = 1;
     public int playerScore = 0;
     public int remainingLives = 0;
+    public int checkpoint = 15;
+    private int checkpointPassed = 0;
 
     public float minSpawnInterval = 1.5f;
     public float maxSpawnInterval = 2f;
@@ -73,6 +77,9 @@ public class GameManager : MonoBehaviour
         if (ScoreText != null)
             ScoreText.text = "Obstacles Avoided: " + playerScore;
 
+        if(CheckpointText != null)
+            CheckpointText.text = "Next Checkpoint: " + checkpoint;
+
         if (LivesText != null)
             LivesText.text = "Lives Left: " + remainingLives + " / " + playerLives;
 
@@ -90,6 +97,13 @@ public class GameManager : MonoBehaviour
         UpdateUI();
 
         minSpawnInterval = Mathf.Max(0.25f, minSpawnInterval - 0.05f);
+
+        if(playerScore >= checkpoint)
+        {
+            checkpointPassed++; 
+            checkpoint *= (int)Mathf.Pow(1.25f, checkpointPassed);
+            UpdateUI();
+        }
 
     }
 
