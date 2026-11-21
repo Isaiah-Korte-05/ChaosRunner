@@ -18,7 +18,7 @@ public class ShieldPickup : MonoBehaviour
         }
         else if (other.CompareTag("Despawn"))
         {
-            // Missed it, clean up without scoring
+            // if missed clear without effecting score
             Destroy(gameObject);
         }
     }
