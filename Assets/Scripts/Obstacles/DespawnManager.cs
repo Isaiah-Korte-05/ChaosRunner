@@ -32,7 +32,7 @@ public class DespawnManager : MonoBehaviour
             }
             else
             {
-                GameManager.shieldIsActive = false;
+                GameManager.DeactivateShield();
             }
         }
     }

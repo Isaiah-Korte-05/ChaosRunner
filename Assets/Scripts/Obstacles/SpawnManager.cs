@@ -10,6 +10,9 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject objectPrefab;
 
+    public GameObject shieldPrefab;
+    [Range(0f, 1f)] public float shieldChance = 0.08f;
+
     public Transform[] spawnPoints;
 
     public float accelerationRate = 0.05f;
@@ -37,8 +40,14 @@ public class SpawnManager : MonoBehaviour
 
         Transform selectedSpawnPoint = spawnPoints[randomIndex];
 
+        GameObject prefabToSpawn = objectPrefab;
+        if (shieldPrefab != null && Random.value < shieldChance)
+        {
+            prefabToSpawn = shieldPrefab;
+        }
+
         GameObject obj = Instantiate(
-            objectPrefab,
+            prefabToSpawn,
             selectedSpawnPoint.position,
             selectedSpawnPoint.rotation * Quaternion.Euler(0, 180, 0)
         );

@@ -2,6 +2,7 @@ using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     public bool shieldIsActive = false;
     public float shieldTime = 5f;
+    public GameObject shieldVisual;
+    private Coroutine shieldRoutine;
 
     public enum GameState
     {
@@ -145,5 +148,36 @@ public class GameManager : MonoBehaviour
         if (!CanShoot()) return;
         ammo--;
         UpdateUI();
+    }
+
+    public void ActivateShield()
+    {
+        // picking up another shield will reset the timer
+        if(shieldRoutine != null) StopCoroutine(shieldRoutine);
+        shieldRoutine = StartCoroutine(ShieldCountdown());
+    }
+
+    public void DeactivateShield()
+    {
+        if (shieldRoutine != null)
+        {
+            StopCoroutine(shieldRoutine);
+            shieldRoutine = null;
+        }
+
+        shieldIsActive = false;
+        if (shieldVisual != null) shieldVisual.SetActive(false);
+    }
+
+    IEnumerator ShieldCountdown()
+    {
+        shieldIsActive = true;
+        if (shieldVisual != null) shieldVisual.SetActive(true);
+
+        yield return new WaitForSeconds(shieldTime);
+
+        shieldIsActive = false;
+        if (shieldVisual != null) shieldVisual.SetActive(false);
+        shieldRoutine = null;
     }
 }
