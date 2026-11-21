@@ -1374,7 +1374,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d7dc8d478a8d941905a33b716efa4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  objectPrefab: {fileID: 9144749981302401450, guid: b19979fd153755c40978b6a83f89073b, type: 3}
+  obstacleTypes:
+  - name: LowBlock
+    prefab: {fileID: 9144749981302401450, guid: b19979fd153755c40978b6a83f89073b, type: 3}
+    weight: 4
+    minScore: 0
+    yOffset: 0
+  - name: TallWall
+    prefab: {fileID: 9091254774734585763, guid: 329dad634c0f6fc468d8ddf772e5f98b, type: 3}
+    weight: 2
+    minScore: 0
+    yOffset: 1.75
+  - name: SwayWall
+    prefab: {fileID: 6199573159344741629, guid: 82ad3fd7c4995b7469d151f29d74c351, type: 3}
+    weight: 1
+    minScore: 20
+    yOffset: 0
   shieldPrefab: {fileID: 6354135915072783592, guid: fa179840d49fda0479de06e79518c407, type: 3}
   shieldChance: 0.08
   spawnPoints:
